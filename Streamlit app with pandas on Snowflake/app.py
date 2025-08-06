@@ -7,7 +7,7 @@ from snowflake.snowpark.session import Session
 session = Session.builder.create()
 # Simple Streamlit app title
 st.title("Simple pandas on Snowflake Streamlit app")    
-st.markdown("This app demonstrates how to use pandas on Snowflake with Streamlit. Feel free to use as template and build your own app.")
+st.markdown("This app demonstrates how to use pandas on Snowflake with Streamlit. Feel free to use this as template and build your own app.")
 
 
 # Generate sample data (simulating Snowflake data)
@@ -33,7 +33,10 @@ def create_table():
 # Create table revenue_transactions_10M
 create_table()
 
-
+st.markdown("Use pd.read_snowflake to read the table into a Snowpark pandas dataframe")
+st.code("""
+df = pd.read_snowflake("revenue_transactions_10M")
+""")
 df = pd.read_snowflake("revenue_transactions_10M")
 
 # Display data
@@ -59,6 +62,7 @@ with col3:
     st.metric("Average Revenue", f"${df['REVENUE'].mean():.2f}")
 
 # Simple chart - Revenue by Month
+st.markdown("pandas on Snowflake integrates seamlessly with visualization libraries such as Matplotlib, altair, plotly, and other third party libraries.")
 st.subheader("Example Matplotlib Chart: Revenue by Month")
 import matplotlib.pyplot as plt
 df['Month'] = pd.to_datetime(df['DATE']).dt.month
